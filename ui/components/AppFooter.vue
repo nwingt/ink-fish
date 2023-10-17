@@ -1,6 +1,6 @@
 <template>
   <component :is="tag" class="text-sm text-center text-zinc-500 dark:text-zinc-400">
-    Made with ❤️ By Liker Land
+    <span>{{ $t('footer_credit') }}</span>
   </component>
 </template>
 

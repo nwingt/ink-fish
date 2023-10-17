@@ -9,7 +9,7 @@
       />
     </UTooltip>
 
-    <h1 class="text-center text-2xl font-bold">Ink Fish</h1>
+    <h1 class="text-center text-2xl font-bold">{{ $t('app_header_title') }}</h1>
 
     <USlideover v-model="isOpenMenu" side="left">
       <UCard
@@ -27,16 +27,27 @@
             icon="i-heroicons-x-mark"
             @click="isOpenMenu = false"
           />
-          <ClientOnly>
-            <UToggle
-              on-icon="i-heroicons-moon-20-solid"
-              off-icon="i-heroicons-sun-20-solid"
-              v-model="isDark"
+
+          <div class="flex items-center gap-4">
+            <ClientOnly>
+              <UToggle
+                on-icon="i-heroicons-moon-20-solid"
+                off-icon="i-heroicons-sun-20-solid"
+                v-model="isDark"
+              />
+              <template #fallback>
+                <div class="w-8 h-8" />
+              </template>
+            </ClientOnly>
+  
+            <USelect
+              :value="locale"
+              :options="localeList"
+              icon="i-heroicons-language"
+              :ui="{ rounded: 'rounded-full' }"
+              @change="handleLocaleChange"
             />
-            <template #fallback>
-              <div class="w-8 h-8" />
-            </template>
-          </ClientOnly>
+          </div>
         </template>
 
         <UVerticalNavigation
@@ -58,7 +69,12 @@
         </UVerticalNavigation>
 
         <template #footer>
-          <UButton size="xl" :block="true" variant="outline" label="Logout" />
+          <UButton
+            size="xl"
+            :block="true"
+            variant="outline"
+            :label="$t('app_menu_logout_button')"
+          />
 
           <AppFooter class="mt-4 lg:hidden" tag="div" />
         </template>
@@ -70,21 +86,37 @@
 <script setup>
 const isOpenMenu = ref(false)
 
-const menuLinks = [
+const { locale, locales, t: $t } = useI18n()
+
+const localeList = computed(() => locales.value.map(i => ({
+  label: i.name,
+  value: i.code,
+})))
+
+const switchLocalePath = useSwitchLocalePath()
+const router = useRouter()
+
+function handleLocaleChange(event) {
+  router.push(switchLocalePath(event.target.value))
+}
+
+const localePath = useLocalePath()
+
+const menuLinks = computed(() => [
   {
-    label: 'Home',
+    label: $t('app_menu_home_link'),
     icon: 'i-heroicons-home',
-    to: '/',
+    to: localePath({ name: 'index' }),
   },
   {
-    label: 'Collection',
+    label: $t('app_menu_collection_link'),
     icon: 'i-heroicons-squares-2x2',
-    to: '/collection',
+    to: localePath({ name: 'collection' }),
   },
   {
-    label: 'Settings',
+    label: $t('app_menu_settings_link'),
     icon: 'i-heroicons-cog-8-tooth',
-    to: '/settings',
+    to: localePath({ name: 'settings' }),
   },
 ].map((link) => {
   if (link.to) {
@@ -96,7 +128,7 @@ const menuLinks = [
     }
   }
   return link
-})
+}))
 
 const colorMode = useColorMode()
 

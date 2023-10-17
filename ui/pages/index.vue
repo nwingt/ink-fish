@@ -12,7 +12,7 @@
       <ul class="flex flex-col flex-grow gap-4">
         <li v-for="index in isReceivedTabSelected ? 10 : 4">
           <ClientOnly>
-            <ULink :to="{ name: 'index-mail-id', params: { id: `${index}` }, query: { ...route.query } }">
+            <ULink :to="localePath({ name: 'index-mail-id', params: { id: `${index}` }, query: { ...route.query } })">
               <MailCard :key="index" />
             </ULink>
           </ClientOnly>
@@ -58,68 +58,72 @@ definePageMeta({
   layout: 'paddingless',
 })
 
-const tabItems = [
+const { t: $t } = useI18n()
+const localePath = useLocalePath()
+const getRouteBaseName = useRouteBaseName()
+
+const tabItems = computed(() => [
   {
-    label: "Received",
+    label: $t('index_page_tab_received'),
     key: 'received',
   },
   {
-    label: "Sent",
+    label: $t('index_page_tab_sent'),
     key: 'sent',
   },
-]
+])
 
 const route = useRoute()
 const router = useRouter()
 
 const selectedTabIndex = computed({
   get() {
-    const index = tabItems.findIndex((item) => item.key === route.query.tab)
+    const index = tabItems.value.findIndex((item) => item.key === route.query.tab)
     if (index === -1) {
       return 0
     }
     return index
   },
   set(value) {
-    router.replace({ query: { tab: tabItems[value].key } })
+    router.replace({ query: { tab: tabItems.value[value].key } })
   },
 })
 
-const isReceivedTabSelected = computed(() => tabItems[selectedTabIndex.value].key === 'received')
+const isReceivedTabSelected = computed(() => tabItems.value[selectedTabIndex.value].key === 'received')
 
 const isMailboxOpened = computed({
   get() {
-    return route.name === 'index-mailbox'
+    return getRouteBaseName(route) === 'index-mailbox'
   },
   set(value) {
     if (value) {
-      router.push({ name: 'index-mailbox', query: { ...route.query } })
+      router.push(localePath({ name: 'index-mailbox', query: { ...route.query } }))
     } else {
-      router.replace({ name: 'index', query: { ...route.query } })
+      router.replace(localePath({ name: 'index', query: { ...route.query } }))
     }
   },
 })
 
 const isComposeOpened = computed({
   get() {
-    return route.name === 'index-compose'
+    return getRouteBaseName(route) === 'index-compose'
   },
   set(value) {
     if (value) {
-      router.push({ name: 'index-compose', query: { ...route.query } })
+      router.push(localePath({ name: 'index-compose', query: { ...route.query } }))
     } else {
-      router.replace({ name: 'index-mailbox', query: { ...route.query } })
+      router.replace(localePath({ name: 'index-mailbox', query: { ...route.query } }))
     }
   },
 })
 
 const isMailOpened = computed({
   get() {
-    return route.name === 'index-mail-id'
+    return getRouteBaseName(route) === 'index-mail-id'
   },
   set(value) {
     if (value) {
-      router.push({ name: 'index-mail-id', query: { ...route.query } })
+      router.push(localePath({ name: 'index-mail-id', query: { ...route.query } }))
     } else {
       router.back()
     }

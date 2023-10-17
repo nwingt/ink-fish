@@ -9,7 +9,7 @@
     }"
   >
     <template #header>
-      <h1 class="text-xl font-bold">Mail #{{ route.params.id }}</h1>
+      <h1 class="text-xl font-bold">{{ $t('mail_details_page_title', { id: route.params.id }) }}</h1>
       <UButton
         variant="ghost"
         icon="i-heroicons-x-mark"
@@ -27,11 +27,11 @@
     <template #footer>
       <UButton
         icon="i-heroicons-paper-airplane"
-        label="Reply"
+        :label="$t('mail_details_page_reply_button')"
         size="xl"
         variant="solid"
         :block="true"
-        :to="{ name: 'index-compose', query: { ...route.query } }"
+        :to="localePath({ name: 'index-compose', query: { ...route.query } })"
       />
     </template>
 
@@ -41,4 +41,5 @@
 <script setup>
 const route = useRoute()
 const router = useRouter()
+const localePath = useLocalePath()
 </script>

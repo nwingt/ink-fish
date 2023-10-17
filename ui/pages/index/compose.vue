@@ -10,7 +10,7 @@
     }"
   >
     <template #header>
-      <h1 class="text-xl font-bold">New Mail</h1>
+      <h1 class="text-xl font-bold">{{ $t('compose_page_title') }}</h1>
       <UButton
         variant="ghost"
         icon="i-heroicons-x-mark"
@@ -25,7 +25,7 @@
     <template #footer>
       <UButton
         icon="i-heroicons-paper-airplane"
-        label="Send"
+        :label="$t('compose_page_send_button')"
         size="xl"
         variant="solid"
         :block="true"
@@ -39,9 +39,11 @@
 const toast = useToast()
 const route = useRoute()
 const router = useRouter()
+const { t: $t } = useI18n()
+const localePath = useLocalePath()
 
 function handleClickSendButton() {
-  router.replace({ name: 'index', query: { ...route.query } })
-  toast.add({ title: 'Sent!' })
+  router.replace(localePath({ name: 'index', query: { ...route.query } }))
+  toast.add({ title: $t('compose_page_sent_alert') })
 }
 </script>

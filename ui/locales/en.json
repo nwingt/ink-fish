@@ -1,0 +1,17 @@
+{
+  "app_header_title": "Ink Fish",
+  "app_menu_collection_link": "Collection",
+  "app_menu_home_link": "Home",
+  "app_menu_logout_button": "Logout",
+  "app_menu_settings_link": "Settings",
+  "compose_page_send_button": "Send",
+  "compose_page_sent_alert": "Sent!",
+  "compose_page_title": "Compose",
+  "footer_credit": "Made with ❤️ By Liker Land",
+  "index_page_tab_received": "Received",
+  "index_page_tab_sent": "Sent",
+  "mail_details_page_reply_button": "Reply",
+  "mail_details_page_title": "Mail #{id}",
+  "mailbox_page_compose_button": "Compose",
+  "mailbox_page_title": "Mailbox"
+}

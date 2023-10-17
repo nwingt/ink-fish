@@ -13,17 +13,17 @@
     }"
   >
     <template #header>
-      <h1 class="text-xl font-bold">Mailbox</h1>
+      <h1 class="text-xl font-bold">{{ $t('mailbox_page_title') }}</h1>
       <UButton
         variant="ghost"
         icon="i-heroicons-x-mark"
-        :to="{ name: 'index' }"
+        :to="localePath({ name: 'index' })"
       />
     </template>
 
     <ul class="flex flex-col gap-4">
       <li v-for="index in 8">
-        <ULink :to="{ name: 'index-mail-id', params: { id: index }, query: { ...route.query } }">
+        <ULink :to="localePath({ name: 'index-mail-id', params: { id: index }, query: { ...route.query } })">
           <MailCard :key="index" />
         </ULink>
       </li>
@@ -32,11 +32,11 @@
     <template #footer>
       <UButton
         icon="i-heroicons-pencil-square"
-        label="Send New Mail"
+        :label="$t('mailbox_page_compose_button')"
         size="xl"
         variant="solid"
         :block="true"
-        @click="router.push({ name: 'index-compose', query: { ...route.query } })"
+        @click="router.push(localePath({ name: 'index-compose', query: { ...route.query } }))"
       />
     </template>
   </UCard>
@@ -45,4 +45,5 @@
 <script setup>
 const route = useRoute()
 const router = useRouter()
+const localePath = useLocalePath()
 </script>

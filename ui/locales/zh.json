@@ -1,0 +1,17 @@
+{
+  "app_header_title": "墨語",
+  "app_menu_collection_link": "收藏品",
+  "app_menu_home_link": "首頁",
+  "app_menu_logout_button": "登出",
+  "app_menu_settings_link": "設定",
+  "compose_page_send_button": "發送",
+  "compose_page_sent_alert": "已發送",
+  "compose_page_title": "寫信",
+  "footer_credit": "由 Liker Land 用 ❤️ 製作",
+  "index_page_tab_received": "已收到",
+  "index_page_tab_sent": "已送出",
+  "mail_details_page_reply_button": "回覆",
+  "mail_details_page_title": "郵件 #{id}",
+  "mailbox_page_compose_button": "寫信",
+  "mailbox_page_title": "信箱"
+}
